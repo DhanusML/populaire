@@ -1,14 +1,18 @@
-#include "utils.h"
-#include <string.h>
 #include <stdlib.h>
+#include "utils.h"
+#include "words.h"
 #include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+
 
 void
 get_input_from_file(char **text, char *name)
 {
     size_t buff_size = 2;
     size_t curr_buff_size = 0;
-    //size_t curr_read_length;
     char *ptr = malloc(buff_size * sizeof(char) + 1);
     assert(ptr != 0 && "malloc failed!\n");
     char *temp_ptr = ptr;
@@ -68,6 +72,40 @@ get_default_text(char **text)
     *text = ptr;
 }
 
+
+void
+get_random_text(char **text, size_t num)
+{
+    srand(time(NULL));
+    size_t buff_size = 6 * 2 * num; // average word size 5 char
+    size_t end = 0;
+    char *buffer = (char *)calloc(buff_size, sizeof(char));
+    char *buffer_ptr = buffer;
+    const char *sample;
+    char space = ' ';
+    size_t sample_len;
+    for (size_t i=0; i<num; i++)
+    {
+        sample = freq_words_100[random() % 1000];
+        printf("%s\n", sample);
+        sample_len = strlen(sample);
+        end += strlen(sample)+1;
+        if (end < buff_size)
+        {
+            memcpy(buffer_ptr, sample, sample_len);
+            buffer_ptr += sample_len;
+            memcpy(buffer_ptr, &space, 1);
+            printf("%s\n", buffer);
+            buffer_ptr++;
+        }
+        else return;
+    }
+    *(buffer_ptr-1) = '.';
+    *buffer_ptr = (char)0;
+    *text = buffer;
+    printf("text: %s\n", buffer);
+    printf("text: %s\n", *text);
+}
 
 void
 free_text(char *text)

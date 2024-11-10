@@ -109,6 +109,8 @@ typedef struct Game_Window_t
 
 void get_input_from_file(char **text, char *name);
 
+void get_random_text(char **text, size_t num);
+
 void get_default_text(char **text);
 
 int pre_start_state_config(Game_Status *status, Stats *measures, char *text);

@@ -1,10 +1,11 @@
 #include "utils.h"
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 void print_help(char *exe_name)
 {
-    fprintf(stderr, "%s [-f FILE -h]\n", exe_name);
+    fprintf(stderr, "%s [-f FILE -r NUM -h]\n", exe_name);
 }
 
 int
@@ -12,11 +13,16 @@ main(int argc, char *argv[])
 {
     char *text = NULL;
     int opt;
-    while ((opt = getopt(argc, argv, "f:h"))!= -1)
+    while ((opt = getopt(argc, argv, "f:r:h"))!= -1)
         switch (opt)
         {
             case 'f':
                 get_input_from_file(&text, optarg);
+                break;
+            case 'r':
+                get_random_text(&text, (size_t)atoi(optarg));
+                printf("random:\n");
+                printf("%s\n", text);
                 break;
             case 'h':
                 print_help(argv[0]);
