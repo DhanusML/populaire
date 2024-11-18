@@ -21,8 +21,6 @@ main(int argc, char *argv[])
                 break;
             case 'r':
                 get_random_text(&text, (size_t)atoi(optarg));
-                printf("random:\n");
-                printf("%s\n", text);
                 break;
             case 'h':
                 print_help(argv[0]);

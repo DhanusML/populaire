@@ -77,7 +77,7 @@ void
 get_random_text(char **text, size_t num)
 {
     srand(time(NULL));
-    size_t buff_size = 6 * 2 * num; // average word size 5 char
+    size_t buff_size = 16 * num; // max word size 16 char
     size_t end = 0;
     char *buffer = (char *)calloc(buff_size, sizeof(char));
     char *buffer_ptr = buffer;
@@ -87,7 +87,6 @@ get_random_text(char **text, size_t num)
     for (size_t i=0; i<num; i++)
     {
         sample = freq_words_100[random() % 1000];
-        printf("%s\n", sample);
         sample_len = strlen(sample);
         end += strlen(sample)+1;
         if (end < buff_size)
@@ -95,16 +94,12 @@ get_random_text(char **text, size_t num)
             memcpy(buffer_ptr, sample, sample_len);
             buffer_ptr += sample_len;
             memcpy(buffer_ptr, &space, 1);
-            printf("%s\n", buffer);
             buffer_ptr++;
         }
         else return;
     }
-    *(buffer_ptr-1) = '.';
-    *buffer_ptr = (char)0;
+    *(buffer_ptr-1) = (char)0;
     *text = buffer;
-    printf("text: %s\n", buffer);
-    printf("text: %s\n", *text);
 }
 
 void
